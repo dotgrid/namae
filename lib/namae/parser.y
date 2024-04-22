@@ -28,6 +28,12 @@ rule
            :given => val[0], :family => val[1], :suffix => val[2], :title => val[3]
          )
        }
+       | u_words word u_words opt_suffices opt_titles
+       {
+         result = Name.new(
+           :given => val[0..1].join(' '), :family => val[2], :suffix => val[3], :title => val[4]
+         )
+       }
        | u_words NICK last opt_suffices opt_titles
        {
          result = Name.new(
@@ -116,7 +122,7 @@ require 'strscan'
     :comma => ',',
     :stops => ',;',
     :separator => /\s*(\band\b|\&|;)\s*/i,
-    :title => /\s*\b(sir|lord|count(ess)?|(gen|adm|col|maj|capt|cmdr|lt|sgt|cpl|pvt|pastor|pr|reverend|rev|elder|deacon|deaconess|father|fr|rabbi|cantor|vicar|prof|dr|md|ph\.?d)\.?)(\s+|$)/i,
+    :title => /\s*\b(sir|lord|lady|count(ess)?|(gen|adm|col|maj|capt|cmdr|lt|sgt|cpl|pvt|pastor|pr|reverend|rev|elder|deacon|deaconess|father|fr|rabbi|cantor|vicar|prof|dr|md|ph\.?d)\.?)(\s+|$)/i,
     :suffix => /\s*\b(JR|Jr|jr|SR|Sr|sr|[IVX]{2,})(\.|\b)/,
     :appellation => /\s*\b((mrs?|ms|fr|hr)\.?|miss|herr|frau)(\s+|$)/i,
     :uppercase_particle => /\s*\b(D[aiu]|De[rs]?|St\.?|Saint|La|Les|V[ao]n)(\s+|$)/
